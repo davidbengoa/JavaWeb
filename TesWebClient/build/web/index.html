@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Get Next Generation</title>
+  <style type="text/css">
+ 
+</style>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+</head>
+<body>
+ 
+<div id="fullDiv" style="width:100%" >
+    <table border="1">
+        <tbody>
+            <tr>
+                <td>M:</td>
+                <td><input type="text" id="inputM" name="inputM" value="0" size="4" /></td>
+            </tr>
+            <tr>
+                <td>N:</td>
+                <td><input type="text" id="inputN" name="inputN" value="0" size="4" /></td>
+            </tr>
+            <tr>
+                <td>Live Cells:</td>
+                <td><input type="text" id="inputCells" name="inputCells" value="0" size="100" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input name="test" type="button" value="Get Next Generation!!" onClick="getNextGeneration();"></td>
+            </tr>
+            <tr>
+                <td>Next Generation Result:</td>
+                <td><div id="output"></div></td>
+            </tr>
+            <tr>
+                <td>Grid Info:</td>
+                <td><div id="gridInfo"></div></td>
+            </tr>
+        </tbody>
+    </table>
+</div>                                            
+ 
+<script type="text/javascript">
+    
+    function drawGeneration(json){
+        var result = "<html>" + JSON.stringify(json) + "</html>";
+        $("#output").html(result);
+        $("#gridInfo").html($("#inputM").val() + " x " + $("#inputN").val());
+    }
+ 
+    function getNextGeneration()
+    {
+        /*var liveCells = [[2,1],[2,2],[2,3]];
+        var data = {
+            'M': 5,
+            'N': 5,
+            'liveCells' : liveCells
+        };*/
+        var liveCellsStr = $("#inputCells").val();
+        var liveCells = JSON.parse(liveCellsStr);
+        var m = $("#inputM").val();
+        var n = $("#inputN").val();
+        var data = {
+            'M': m,
+            'N': n,
+            'liveCells': liveCells
+        };
+ 
+        $.ajax({
+            url: "http://davidbengoa.ddns.net/TestWeb/GetGeneration",
+            jsonp: 'callback',
+            dataType: 'jsonp',
+            data: data,
+            success: function(response){
+                drawGeneration(response);
+            },
+            error: function () {
+                alert("Error has occured");
+            }
+        });
+    }
+ 
+</script>
+ 
+</body>
+</html>
