@@ -5,6 +5,8 @@
  */
 package javaio;
 import java.io.*;
+import java.util.Calendar;
+import java.sql.*;
 /**
  *
  * @author David
@@ -38,10 +40,14 @@ public class ReadWriteTextFile {
         return wholeText;
     }
     
-    public void WriteFile(String input, boolean append){
+    public void WriteFile(String input, boolean append, boolean addTimeStamp){
         try{
             FileWriter fw = new FileWriter(curFile, append);
             BufferedWriter bw = new BufferedWriter(fw);
+            if(addTimeStamp){
+                java.sql.Timestamp currentTimeStamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+                bw.write(currentTimeStamp.toString() + " - ");
+            }
             bw.write(input);
             bw.newLine();
             bw.close();

@@ -50,7 +50,7 @@ public class GetGeneration extends HttpServlet {
             
             ReadWriteTextFile wfile = new ReadWriteTextFile("D:\\Documents\\Dropbox\\SERVER_LOG\\temp.txt");
             wfile.WriteFile("Header:" + request.getHeader("x-forwarded-for")
-                    + " - RemoteAddr:" + request.getRemoteAddr() + " - RemoteHost:" + request.getRemoteHost() + "\n", true);
+                    + " - RemoteAddr:" + request.getRemoteAddr() + " - RemoteHost:" + request.getRemoteHost() + "\n", true, true);
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
