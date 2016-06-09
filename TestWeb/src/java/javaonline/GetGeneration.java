@@ -9,13 +9,12 @@ import java.awt.Point;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javaio.ReadWriteTextFile;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  *
  * @author David
@@ -48,6 +47,10 @@ public class GetGeneration extends HttpServlet {
             String jsonpCall = request.getParameter("callback");
             Generation g = new Generation();
             out.printf(jsonpCall + "(" + g.getJSONPNextGeneration(m,n,data) + ")");
+            
+            ReadWriteTextFile wfile = new ReadWriteTextFile("D:\\Documents\\Dropbox\\SERVER_LOG\\temp.txt");
+            wfile.WriteFile("Header:" + request.getHeader("x-forwarded-for")
+                    + " - RemoteAddr:" + request.getRemoteAddr() + " - RemoteHost:" + request.getRemoteHost() + "\n", true);
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
